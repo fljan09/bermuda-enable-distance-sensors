@@ -384,6 +384,11 @@ class BermudaSensorScannerRange(BermudaSensorRange):
         return None
 
     @property
+    def entity_registry_enabled_default(self) -> bool:
+        """Distance to entities should be automatically enabled."""
+        return True
+
+    @property
     def extra_state_attributes(self) -> Mapping[str, Any] | None:
         """We need to reimplement this, since the attributes need to be scanner-specific."""
         devscanner = self._device.get_scanner(self._scanner.address)
@@ -400,6 +405,11 @@ class BermudaSensorScannerRange(BermudaSensorRange):
 
 class BermudaSensorScannerRangeRaw(BermudaSensorScannerRange):
     """Provides un-filtered latest distances per-scanner."""
+
+    @property
+    def entity_registry_enabled_default(self) -> bool:
+        """Unfiltered distance entities should not be automatically enabled."""
+        return False
 
     @property
     def unique_id(self):
